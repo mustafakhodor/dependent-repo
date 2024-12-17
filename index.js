@@ -1,0 +1,1 @@
+const add = require('@mustafanet/core-package')
