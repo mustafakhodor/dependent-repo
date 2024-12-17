@@ -1,0 +1,30 @@
+name: Update Core Package on Release
+
+on:
+  repository_dispatch:
+    types: [core-package-release]  # Custom event type triggered by the webhook
+
+jobs:
+  update-core-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Update core-package
+        run: npm update core-package
+
+      - name: Commit changes
+        run: |
+          git add package.json package-lock.json
+          git commit -m "chore: update core-package to latest version"
+          git push origin main
